@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-benchmark="import timeit; print(timeit.timeit('import json; json.dumps(list(range(10000)))', number=5000))"
+benchmark="import timeit; print(timeit.timeit('import ujson; ujson.dumps(list(range(10000)))', number=5000))"
 files=( Dockerfile-* )
 names=( )
 
