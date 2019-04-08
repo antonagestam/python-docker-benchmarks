@@ -1,0 +1,7 @@
+FROM python:3.7.2-slim
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc libc-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install --upgrade pip setuptools wheel \
+    && pip install ujson \
+    && apt-get purge -y --auto-remove gcc libc-dev

@@ -1,0 +1,6 @@
+FROM python:3.7.2-alpine3.8
+RUN apk add --no-cache build-base jemalloc-dev && \
+    pip install --upgrade pip setuptools wheel && \
+    pip install ujson && \
+    apk del --purge -r build-base
+ENV LD_PRELOAD /usr/lib/libjemalloc.so

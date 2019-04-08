@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+benchmark="import timeit; print(timeit.timeit('import json; json.dumps(list(range(10000)))', number=5000))"
+files=( Dockerfile-* )
+names=( )
+
+echo building ...
+
+for file in "${files[@]}"; do
+    name=${file#*-}-benchmark
+    names+=( $name )
+    docker build -f $file -t $name:latest . 2>&1 > /dev/null &
+done
+
+wait
+
+echo running ...
+
+for name in "${names[@]}"; do
+    sleep 1
+    echo "$name: $(docker run --rm $name python -c "$benchmark")"
+done
